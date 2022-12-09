@@ -10,7 +10,7 @@ export default class EmployeeService implements ApiService {
    * Fetches Employees from API.
    */
   public static async get(): Promise<Employee[]> {
-    const response = await http.get<EmployeeDto[]>('goods');
+    const response = await http.get<EmployeeDto[]>('employee');
     const EmployeesDto = response.data;
 
     return EmployeesDto.map(employeeMapper.fromDto);

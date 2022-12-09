@@ -10,7 +10,7 @@ export default class ManufacturerService implements ApiService {
    * Fetches Manufacturers from API.
    */
   public static async get(): Promise<Manufacturer[]> {
-    const response = await http.get<ManufacturerDto[]>('goods');
+    const response = await http.get<ManufacturerDto[]>('manufacturer');
     const ManufacturersDto = response.data;
 
     return ManufacturersDto.map(manufacturerMapper.fromDto);

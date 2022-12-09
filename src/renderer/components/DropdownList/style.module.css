@@ -1,0 +1,25 @@
+.toggle {
+  background-color: transparent;
+  padding: 0;
+  bottom: 0;
+  font-size: var(--fz-s);
+}
+
+.modalAnchor {
+  position: relative;
+  width: 100%;
+  height: 0;
+}
+
+.modal {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 10px;
+  background-color: var(--light-color);
+  box-shadow: 0 0 5px #0005;
+}

@@ -10,7 +10,7 @@ export default class SaleService implements ApiService {
    * Fetches Sales from API.
    */
   public static async get(): Promise<Sale[]> {
-    const response = await http.get<SaleDto[]>('goods');
+    const response = await http.get<SaleDto[]>('sales');
     const SalesDto = response.data;
 
     return SalesDto.map(saleMapper.fromDto);

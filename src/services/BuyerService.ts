@@ -10,7 +10,7 @@ export default class BuyerService implements ApiService {
    * Fetches Buyers from API.
    */
   public static async get(): Promise<Buyer[]> {
-    const response = await http.get<BuyerDto[]>('goods');
+    const response = await http.get<BuyerDto[]>('buyer');
     const buyersDto = response.data;
 
     return buyersDto.map(buyerMapper.fromDto);

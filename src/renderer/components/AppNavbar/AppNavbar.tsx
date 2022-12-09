@@ -9,6 +9,9 @@ const AppNavbarComponent: FC = () => (
     <Link to="/products" className={clsx(style.navbar__link)}>
       Products
     </Link>
+    <Link to="/sales" className={clsx(style.navbar__link)}>
+      Sales
+    </Link>
     <Link to="/" className={clsx(style.navbar__link)}>
       Home
     </Link>
