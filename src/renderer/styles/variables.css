@@ -1,0 +1,13 @@
+:root {
+  --primary-color: #119822;
+  --secondary-color: #1e441e;
+  --translucent-prim-color: #1198233c;
+  --translucent-sec-color: #1e441e3c;
+  --dark-color: #04101f;
+  --light-color: #ffffff;
+
+  --fz-xs: 0.5rem;
+  --fz-s: 1rem;
+  --fz-m: 1.25rem;
+  --fz-l: 1.75rem;
+}

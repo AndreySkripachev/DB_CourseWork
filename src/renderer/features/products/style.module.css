@@ -1,0 +1,20 @@
+.table {
+  width: 100%;
+}
+
+.caption {
+  text-align: left;
+  font-size: var(--fz-l);
+}
+
+.row td {
+  padding: 3px;
+}
+
+.row:nth-child(odd) {
+  background-color: var(--translucent-prim-color);
+}
+
+.row:nth-child(even) {
+  background-color: var(--translucent-sec-color);
+}

@@ -1,19 +1,13 @@
-export class Product {
-  public readonly id: number;
+import { Manufacturer } from './manufacturer';
 
-  public readonly name: string;
+export interface Product {
+  readonly id: number;
 
-  public readonly cost: number;
+  readonly name: string;
 
-  public readonly type: string;
+  readonly cost: number;
 
-  public readonly description: string;
+  readonly type: string;
 
-  public constructor(data: Product) {
-    this.id = data.id;
-    this.name = data.name;
-    this.cost = data.cost;
-    this.type = data.type;
-    this.description = data.description;
-  }
+  readonly manufacturer: Omit<Manufacturer, 'id'>;
 }

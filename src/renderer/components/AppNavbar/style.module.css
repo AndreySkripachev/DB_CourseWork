@@ -1,0 +1,16 @@
+.navbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  gap: 8px;
+  background-color: var(--dark-color);
+}
+
+.navbar__link {
+  color: var(--light-color);
+}
+
+.navbar__link:hover {
+  text-decoration: underline;
+}

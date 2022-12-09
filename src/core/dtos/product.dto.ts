@@ -1,3 +1,5 @@
+import { ManufacturerDto } from './manufacturer.dto';
+
 export interface ProductDto {
   readonly id: number;
 
@@ -7,5 +9,5 @@ export interface ProductDto {
 
   readonly type: string;
 
-  readonly description: string;
+  readonly manufacturer: Omit<ManufacturerDto, 'id'>;
 }
