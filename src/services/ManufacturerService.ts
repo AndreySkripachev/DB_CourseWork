@@ -5,14 +5,23 @@ import { ApiService } from './ApiService';
 
 import http from './HttpService';
 
+const URL = 'manufacturers';
+
 export default class ManufacturerService implements ApiService {
   /**
    * Fetches Manufacturers from API.
    */
   public static async get(): Promise<Manufacturer[]> {
-    const response = await http.get<ManufacturerDto[]>('manufacturer');
+    const response = await http.get<ManufacturerDto[]>(URL);
     const ManufacturersDto = response.data;
 
     return ManufacturersDto.map(manufacturerMapper.fromDto);
+  }
+
+  public static async post({
+    name,
+    country,
+  }: Omit<Manufacturer, 'id'>): Promise<void> {
+    await http.get(`${URL}/${name}/${country}`);
   }
 }

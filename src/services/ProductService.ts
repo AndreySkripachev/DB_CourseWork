@@ -5,14 +5,27 @@ import { ApiService } from './ApiService';
 
 import http from './HttpService';
 
+const URL = 'goods';
+
 export default class ProductService implements ApiService {
   /**
    * Fetches products from API.
    */
   public static async get(): Promise<Product[]> {
-    const response = await http.get<ProductDto[]>('goods');
+    const response = await http.get<ProductDto[]>(URL);
     const productsDto = response.data;
 
     return productsDto.map(productMapper.fromDto);
+  }
+
+  public static async post(
+    product: Pick<Product, 'cost' | 'name'> & {
+      manufacturer: number;
+      type: number;
+    }
+  ): Promise<void> {
+    await http.get(
+      `${URL}/${product.name}/${product.cost}/${product.type}/${product.manufacturer}`
+    );
   }
 }

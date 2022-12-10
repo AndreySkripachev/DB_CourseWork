@@ -5,14 +5,25 @@ import { ApiService } from './ApiService';
 
 import http from './HttpService';
 
+const URL = 'buyer';
+
 export default class BuyerService implements ApiService {
   /**
    * Fetches Buyers from API.
    */
   public static async get(): Promise<Buyer[]> {
-    const response = await http.get<BuyerDto[]>('buyer');
+    const response = await http.get<BuyerDto[]>(URL);
     const buyersDto = response.data;
 
     return buyersDto.map(buyerMapper.fromDto);
+  }
+
+  public static async post({
+    address,
+    email,
+    name,
+    phone,
+  }: Omit<Buyer, 'id'>): Promise<void> {
+    await http.get(`${URL}/${name}/${address}/${phone}/${email}`);
   }
 }

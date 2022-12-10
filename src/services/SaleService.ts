@@ -5,12 +5,14 @@ import { ApiService } from './ApiService';
 
 import http from './HttpService';
 
+const URL = 'sales';
+
 export default class SaleService implements ApiService {
   /**
    * Fetches Sales from API.
    */
   public static async get(): Promise<Sale[]> {
-    const response = await http.get<SaleDto[]>('sales');
+    const response = await http.get<SaleDto[]>(URL);
     const SalesDto = response.data;
 
     return SalesDto.map(saleMapper.fromDto);
