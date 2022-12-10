@@ -26,4 +26,8 @@ export default class BuyerService implements ApiService {
   }: Omit<Buyer, 'id'>): Promise<void> {
     await http.get(`${URL}/${name}/${address}/${phone}/${email}`);
   }
+
+  public static async delete(id: number): Promise<void> {
+    await http.get(`${URL}/delete/${id}`);
+  }
 }

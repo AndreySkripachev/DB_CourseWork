@@ -26,4 +26,8 @@ export default class EmployeeService implements ApiService {
   }: Omit<Employee, 'id'>): Promise<void> {
     await http.get(`${URL}/${firstName}/${lastName}/${patronymic}/${position}`);
   }
+
+  public static async delete(id: number): Promise<void> {
+    await http.get(`${URL}/delete/${id}`);
+  }
 }

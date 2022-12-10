@@ -28,4 +28,8 @@ export default class ProductService implements ApiService {
       `${URL}/${product.name}/${product.cost}/${product.type}/${product.manufacturer}`
     );
   }
+
+  public static async delete(id: number): Promise<void> {
+    await http.get(`${URL}/delete/${id}`);
+  }
 }

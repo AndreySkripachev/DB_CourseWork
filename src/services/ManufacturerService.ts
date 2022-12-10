@@ -24,4 +24,8 @@ export default class ManufacturerService implements ApiService {
   }: Omit<Manufacturer, 'id'>): Promise<void> {
     await http.get(`${URL}/${name}/${country}`);
   }
+
+  public static async delete(id: number): Promise<void> {
+    await http.get(`${URL}/delete/${id}`);
+  }
 }
