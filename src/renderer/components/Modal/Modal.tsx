@@ -2,16 +2,12 @@ import { FC, memo, PropsWithChildren } from 'react';
 
 import style from './style.module.css';
 
-interface Props {
-  readonly isOpen: boolean;
-}
-
-const ModalComponent: FC<PropsWithChildren<Props>> = ({ children, isOpen }) => {
-  return isOpen ? (
+const ModalComponent: FC<PropsWithChildren> = ({ children }) => {
+  return (
     <div className={style.back}>
       <div className={style.modal}>{children}</div>
     </div>
-  ) : null;
+  );
 };
 
-export const FormModal = memo(ModalComponent);
+export const Modal = memo(ModalComponent);

@@ -1,0 +1,24 @@
+.title {
+  font-size: var(--fz-l);
+}
+
+.subtitle {
+  font-size: var(--fz-m);
+}
+
+.actions {
+  margin-top: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.confirm {
+  color: var(--light-color);
+  background-color: var(--primary-color);
+}
+
+.reject {
+  color: var(--light-color);
+  background-color: var(--warning-color);
+}
