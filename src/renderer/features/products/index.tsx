@@ -11,29 +11,31 @@ const ProductsTableComponent: FC = () => {
   ProductService.get().then(setProducts);
 
   return (
-    <table className={style.table}>
-      <caption className={style.caption}>Products</caption>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Product name</th>
-          <th>Cost</th>
-          <th>Category</th>
-          <th>Manufacturer</th>
-        </tr>
-      </thead>
-      <tbody>
-        {products.map((item) => (
-          <tr className={style.row} key={item.id}>
-            <td>{item.id}</td>
-            <td>{item.name}</td>
-            <td>{item.cost}</td>
-            <td>{item.type}</td>
-            <td>{item.manufacturer.name}</td>
+    <>
+      <table className={style.table}>
+        <caption className={style.caption}>Products</caption>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Product name</th>
+            <th>Cost</th>
+            <th>Category</th>
+            <th>Manufacturer</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {products.map((item) => (
+            <tr className={style.row} key={item.id}>
+              <td>{item.id}</td>
+              <td>{item.name}</td>
+              <td>{item.cost}</td>
+              <td>{item.type}</td>
+              <td>{item.manufacturer.name}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
   );
 };
 

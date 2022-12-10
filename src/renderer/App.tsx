@@ -3,6 +3,8 @@ import './App.css';
 import { AppLayout } from './components/AppLayout/AppLayout';
 import { AppLoading } from './components/AppLoading/AppLoading';
 import { AppNavbar } from './components/AppNavbar/AppNavbar';
+import { BuyersTable } from './features/buyers';
+import { EmployeeTable } from './features/employees';
 import { ProductsTable } from './features/products';
 import { SalesTable } from './features/sales';
 
@@ -16,6 +18,8 @@ export default function App() {
             <Route path="/" element={<AppLoading />} />
             <Route path="/products" element={<ProductsTable />} />
             <Route path="/sales" element={<SalesTable />} />
+            <Route path="/employees" element={<EmployeeTable />} />
+            <Route path="/buyers" element={<BuyersTable />} />
           </Routes>
         </AppLayout>
       </Router>

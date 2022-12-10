@@ -1,5 +1,7 @@
 .navbar {
   width: 100%;
+  max-width: 100%;
+  overflow: auto;
   display: flex;
   align-items: center;
   justify-content: left;
