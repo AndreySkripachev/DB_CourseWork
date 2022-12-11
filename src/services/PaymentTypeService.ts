@@ -25,4 +25,8 @@ export default class PaymentTypeService implements ApiService {
   public static async delete(id: number): Promise<void> {
     await http.get(`${URL}/delete/${id}`);
   }
+
+  public static async put({ id, name }: PaymentType): Promise<void> {
+    await http.get(`${URL}/update/${id}/${name}`);
+  }
 }

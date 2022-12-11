@@ -9,7 +9,4 @@ const http = axios.create({
   },
 });
 
-// eslint-disable-next-line promise/catch-or-return
-// http.get('goods/qwe/12').then(console.log);
-
 export default http;

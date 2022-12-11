@@ -31,8 +31,34 @@
 
 .edit {
   background-color: var(--primary-color);
+  color: var(--light-color);
 }
 
 .delete {
   background-color: var(--warning-color);
+  color: var(--light-color);
+}
+
+.cancel {
+  background-color: var(--warning-color);
+  color: var(--light-color);
+}
+
+.editInfo {
+  font-size: var(--fz-l);
+}
+
+.editField {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  margin-block: 3px;
+}
+
+.editActions {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

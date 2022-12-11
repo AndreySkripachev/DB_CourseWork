@@ -30,4 +30,14 @@ export default class BuyerService implements ApiService {
   public static async delete(id: number): Promise<void> {
     await http.get(`${URL}/delete/${id}`);
   }
+
+  public static async put({
+    address,
+    email,
+    id,
+    name,
+    phone,
+  }: Buyer): Promise<void> {
+    await http.get(`${URL}/update/${id}/${name}/${address}/${phone}/${email}`);
+  }
 }

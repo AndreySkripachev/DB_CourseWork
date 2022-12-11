@@ -14,6 +14,15 @@ const EmployeeTableComponent: FC = () => {
   // eslint-disable-next-line promise/catch-or-return
   EmployeeService.get().then(setEmployees);
 
+  const handleEdit = (key: keyof Employee, value: Employee[typeof key]) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    editable &&
+      setEditable({
+        ...editable,
+        [key]: value,
+      });
+  };
+
   return (
     <>
       <table className={style.table}>
@@ -63,19 +72,72 @@ const EmployeeTableComponent: FC = () => {
             EmployeeService.delete(removable);
             setRemovable(null);
           }}
-          subtitle="Назад дороги нет"
+          subtitle="This will lead to irreversible consequences"
           title="Please confirm deletion of item"
         />
       )}
       {editable && (
         <Modal>
-          <div className={style.editInfo}>Edit menu</div>
+          <p className={style.editInfo}>Edit menu</p>
+          <div>
+            <div className={style.editField}>
+              <span>First name</span>
+              <input
+                type="text"
+                value={editable.firstName}
+                onChange={({ target: { value } }) => {
+                  handleEdit('firstName', value.trim());
+                }}
+              />
+            </div>
+            <div className={style.editField}>
+              <span>Last name</span>
+              <input
+                type="text"
+                value={editable.lastName}
+                onChange={({ target: { value } }) => {
+                  handleEdit('lastName', value.trim());
+                }}
+              />
+            </div>
+            <div className={style.editField}>
+              <span>Patronymic</span>
+              <input
+                type="text"
+                value={editable.patronymic}
+                onChange={({ target: { value } }) => {
+                  handleEdit('patronymic', value.trim());
+                }}
+              />
+            </div>
+            <div className={style.editField}>
+              <span>Position</span>
+              <input
+                type="text"
+                value={editable.position}
+                onChange={({ target: { value } }) => {
+                  handleEdit('position', value.trim());
+                }}
+              />
+            </div>
+          </div>
           <div className={style.editActions}>
-            <button type="button" onClick={() => setEditable(null)}>
-              Cancel
-            </button>
-            <button type="button" onClick={() => {}}>
+            <button
+              type="button"
+              className={style.edit}
+              onClick={() => {
+                EmployeeService.put(editable);
+                setEditable(null);
+              }}
+            >
               Save
+            </button>
+            <button
+              type="button"
+              className={style.cancel}
+              onClick={() => setEditable(null)}
+            >
+              Cancel
             </button>
           </div>
         </Modal>

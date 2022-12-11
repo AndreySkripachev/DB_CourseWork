@@ -30,4 +30,18 @@ export default class EmployeeService implements ApiService {
   public static async delete(id: number): Promise<void> {
     await http.get(`${URL}/delete/${id}`);
   }
+
+  public static async put({
+    firstName,
+    id,
+    lastName,
+    position,
+    patronymic,
+  }: Employee): Promise<void> {
+    await http.get(
+      `${URL}/update/${id}/${lastName}/${firstName}/${
+        patronymic || '-'
+      }/${position}`
+    );
+  }
 }
