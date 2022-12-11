@@ -18,3 +18,21 @@
 .row:nth-child(even) {
   background-color: var(--translucent-sec-color);
 }
+
+.actionsBlock {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.actionsBlock > button {
+  padding: 2px;
+}
+
+.edit {
+  background-color: var(--primary-color);
+}
+
+.delete {
+  background-color: var(--warning-color);
+}
