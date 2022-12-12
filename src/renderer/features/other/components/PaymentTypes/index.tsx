@@ -44,7 +44,7 @@ const PaymentTypesTableComponent: FC = () => {
 
   return (
     <>
-      <table>
+      <table className={style.table}>
         <caption className={style.caption}>
           Payment Types
           <button

@@ -1,6 +1,7 @@
 .toggle {
   background-color: transparent;
   padding: 0;
+  margin-right: 5px;
   bottom: 0;
   font-size: var(--fz-s);
 }

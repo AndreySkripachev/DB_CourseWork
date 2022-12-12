@@ -21,6 +21,7 @@ const SalesTableComponent: FC = () => {
           <th>Buyer</th>
           <th>Payment type</th>
           <th>Sale item</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -41,6 +42,14 @@ const SalesTableComponent: FC = () => {
                 )}
                 title="Sale item"
               />
+            </td>
+            <td className={style.actionsBlock}>
+              <button type="button" className={style.edit} onClick={() => {}}>
+                🖊️
+              </button>
+              <button type="button" className={style.delete} onClick={() => {}}>
+                🗑️
+              </button>
             </td>
           </tr>
         ))}

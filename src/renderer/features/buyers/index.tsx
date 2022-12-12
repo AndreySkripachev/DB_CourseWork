@@ -2,6 +2,7 @@ import { Buyer } from 'core/models';
 import { FC, memo, useState } from 'react';
 import { ConfirmationDialog } from 'renderer/components/ConfirmationDialog/ConfirmationDialog';
 import { Modal } from 'renderer/components/Modal/Modal';
+import { PhoneNumber } from 'renderer/components/PhoneNumber/PhoneNumber';
 import BuyerService from 'services/BuyerService';
 
 import style from './style.module.css';
@@ -68,7 +69,9 @@ const BuyersTableComponent: FC = () => {
             <tr className={style.row} key={item.id}>
               <td>{item.id}</td>
               <td>{item.name}</td>
-              <td>{item.phone}</td>
+              <td>
+                <PhoneNumber value={item.phone} />
+              </td>
               <td>{item.email}</td>
               <td>{item.address}</td>
               <td className={style.actionsBlock}>

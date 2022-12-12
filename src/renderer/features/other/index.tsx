@@ -7,9 +7,15 @@ import style from './style.module.css';
 
 const OtherTablesComponent: FC = () => (
   <div className={style.container}>
-    <ManufacturersTable />
-    <PaymentTypesTable />
-    <ProductTypesTable />
+    <div>
+      <ManufacturersTable />
+    </div>
+    <div>
+      <PaymentTypesTable />
+    </div>
+    <div>
+      <ProductTypesTable />
+    </div>
   </div>
 );
 

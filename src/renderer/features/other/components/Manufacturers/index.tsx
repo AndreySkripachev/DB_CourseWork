@@ -46,7 +46,7 @@ const ManufacturersTableComponent: FC = () => {
 
   return (
     <>
-      <table>
+      <table className={style.table}>
         <caption className={style.caption}>
           Manufacturers
           <button

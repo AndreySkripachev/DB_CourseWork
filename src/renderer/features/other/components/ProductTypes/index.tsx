@@ -44,7 +44,7 @@ const ProductTypesTableComponent: FC = () => {
 
   return (
     <>
-      <table>
+      <table className={style.table}>
         <caption className={style.caption}>
           Product Types
           <button
