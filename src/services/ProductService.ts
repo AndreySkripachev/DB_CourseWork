@@ -32,4 +32,15 @@ export default class ProductService implements ApiService {
   public static async delete(id: number): Promise<void> {
     await http.get(`${URL}/delete/${id}`);
   }
+
+  public static async put(
+    product: Pick<Product, 'cost' | 'name'> & {
+      manufacturer: number;
+      type: number;
+    }
+  ): Promise<void> {
+    await http.get(
+      `${URL}/update/${product.name}/${product.cost}/${product.type}/${product.manufacturer}`
+    );
+  }
 }

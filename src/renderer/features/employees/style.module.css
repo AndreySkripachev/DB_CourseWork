@@ -29,7 +29,12 @@
   padding: 2px;
 }
 
-.edit {
+.add {
+  padding: 2px 10px;
+}
+
+.edit,
+.add {
   background-color: var(--primary-color);
   color: var(--light-color);
 }
@@ -44,7 +49,7 @@
   color: var(--light-color);
 }
 
-.editInfo {
+.modalTitle {
   font-size: var(--fz-l);
 }
 
