@@ -117,6 +117,48 @@ const ProductsTableComponent: FC = () => {
                 }}
               />
             </div>
+            <div className={style.editField}>
+              <span>Cost</span>
+              <input
+                type="number"
+                value={editable.cost}
+                onChange={({ target: { value } }) => {
+                  handleEdit('cost', value);
+                }}
+              />
+            </div>
+            <div className={style.editField}>
+              <span>Manufacturer</span>
+              {manufacturers && (
+                // eslint-disable-next-line jsx-a11y/control-has-associated-label
+                <select
+                  value={editable.manufacturer}
+                  onChange={({ target: { value } }) =>
+                    handleEdit('manufacturer', Number(value))
+                  }
+                >
+                  {manufacturers.map((item) => (
+                    <option value={item.id}>{item.name}</option>
+                  ))}
+                </select>
+              )}
+            </div>
+            <div className={style.editField}>
+              <span>Type</span>
+              {types && (
+                // eslint-disable-next-line jsx-a11y/control-has-associated-label
+                <select
+                  value={editable.type}
+                  onChange={({ target: { value } }) =>
+                    handleEdit('manufacturer', Number(value))
+                  }
+                >
+                  {types.map((item) => (
+                    <option value={item.id}>{item.name}</option>
+                  ))}
+                </select>
+              )}
+            </div>
           </div>
           <div className={style.editActions}>
             <button
