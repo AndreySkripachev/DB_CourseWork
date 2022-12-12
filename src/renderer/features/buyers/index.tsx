@@ -151,7 +151,14 @@ const BuyersTableComponent: FC = () => {
             <button type="button" onClick={() => setEditable(null)}>
               Cancel
             </button>
-            <button type="button" onClick={() => {}}>
+            <button
+              type="button"
+              className={style.edit}
+              onClick={() => {
+                BuyerService.put(editable);
+                setEditable(null);
+              }}
+            >
               Save
             </button>
           </div>

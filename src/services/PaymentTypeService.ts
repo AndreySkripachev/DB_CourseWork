@@ -19,7 +19,7 @@ export default class PaymentTypeService implements ApiService {
   }
 
   public static async post({ name }: Omit<PaymentType, 'id'>): Promise<void> {
-    await http.get(`${URL}/${name}`);
+    await http.get(`${URL}/post/${name}`);
   }
 
   public static async delete(id: number): Promise<void> {

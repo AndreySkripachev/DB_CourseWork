@@ -19,7 +19,7 @@ export default class ProductTypeService implements ApiService {
   }
 
   public static async post({ name }: Omit<ProductType, 'id'>): Promise<void> {
-    await http.get(`${URL}/${name}`);
+    await http.get(`${URL}/post/${name}`);
   }
 
   public static async delete(id: number): Promise<void> {
