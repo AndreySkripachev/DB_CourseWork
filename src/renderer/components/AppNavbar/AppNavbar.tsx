@@ -20,6 +20,9 @@ const AppNavbarComponent: FC = () => (
     <Link to="/" className={style.navbar__link}>
       Home
     </Link>
+    <Link to="/other" className={style.navbar__link}>
+      Other
+    </Link>
   </nav>
 );
 

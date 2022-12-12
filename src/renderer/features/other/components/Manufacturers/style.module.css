@@ -1,0 +1,69 @@
+.table {
+  width: 100%;
+}
+
+.caption {
+  text-align: left;
+  font-size: var(--fz-l);
+}
+
+.row td {
+  padding: 3px;
+}
+
+.row:nth-child(odd) {
+  background-color: var(--translucent-prim-color);
+}
+
+.row:nth-child(even) {
+  background-color: var(--translucent-sec-color);
+}
+
+.actionsBlock {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.actionsBlock > button {
+  padding: 2px;
+}
+
+.add {
+  padding: 2px 10px;
+}
+
+.edit,
+.add {
+  background-color: var(--primary-color);
+  color: var(--light-color);
+}
+
+.delete {
+  background-color: var(--warning-color);
+  color: var(--light-color);
+}
+
+.cancel {
+  background-color: var(--warning-color);
+  color: var(--light-color);
+}
+
+.modalTitle {
+  font-size: var(--fz-l);
+}
+
+.editField {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  margin-block: 3px;
+}
+
+.editActions {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
