@@ -28,13 +28,7 @@ const SalesTableComponent: FC = () => {
           <tr className={style.row} key={id}>
             <td>{id}</td>
             <td>
-              <DropdownMenu
-                list={[
-                  `First name: ${employee.firstName}`,
-                  `Last name: ${employee.lastName}`,
-                ]}
-                title="Employee"
-              />
+              {employee.firstName} {employee.lastName}
             </td>
             <td>
               {buyer.name} ({buyer.email})
