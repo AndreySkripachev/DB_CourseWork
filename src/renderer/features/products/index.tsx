@@ -11,12 +11,16 @@ import style from './style.module.css';
 type EditProduct = Pick<Product, 'cost' | 'name'> & {
   manufacturer: number;
   type: number;
+  id: number;
 };
 
 const ProductsTableComponent: FC = () => {
   const [products, setProducts] = useState<readonly Product[]>([]);
   const [removable, setRemovable] = useState<null | number>(null);
   const [editable, setEditable] = useState<EditProduct | null>(null);
+  const [newProduct, setNewProduct] = useState<Omit<EditProduct, 'id'> | null>(
+    null
+  );
 
   const [manufacturers, setManufacturers] = useState<
     readonly Manufacturer[] | null
@@ -36,6 +40,18 @@ const ProductsTableComponent: FC = () => {
       });
   };
 
+  const handleAddNewProduct = (
+    key: keyof EditProduct,
+    value: EditProduct[typeof key]
+  ) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    newProduct &&
+      setNewProduct({
+        ...newProduct,
+        [key]: value,
+      });
+  };
+
   // eslint-disable-next-line promise/catch-or-return
   ProductService.get().then(setProducts);
   // eslint-disable-next-line promise/catch-or-return
@@ -46,7 +62,23 @@ const ProductsTableComponent: FC = () => {
   return (
     <>
       <table className={style.table}>
-        <caption className={style.caption}>Products</caption>
+        <caption className={style.caption}>
+          Products
+          <button
+            type="button"
+            className={style.add}
+            onClick={() =>
+              setNewProduct({
+                cost: 0,
+                name: '',
+                manufacturer: manufacturers ? manufacturers[0].id : 0,
+                type: types ? types[0].id : 0,
+              })
+            }
+          >
+            +
+          </button>
+        </caption>
         <thead>
           <tr>
             <th>ID</th>
@@ -75,6 +107,7 @@ const ProductsTableComponent: FC = () => {
                       manufacturer: item.manufacturer.id,
                       name: item.name,
                       type: item.type.id,
+                      id: item.id,
                     })
                   }
                 >
@@ -150,7 +183,7 @@ const ProductsTableComponent: FC = () => {
                 <select
                   value={editable.type}
                   onChange={({ target: { value } }) =>
-                    handleEdit('manufacturer', Number(value))
+                    handleEdit('type', Number(value))
                   }
                 >
                   {types.map((item) => (
@@ -175,6 +208,84 @@ const ProductsTableComponent: FC = () => {
               type="button"
               className={style.cancel}
               onClick={() => setEditable(null)}
+            >
+              Cancel
+            </button>
+          </div>
+        </Modal>
+      )}
+      {newProduct && (
+        <Modal>
+          <div className={style.modalTitle}>Edit menu</div>
+          <div>
+            <div className={style.editField}>
+              <span>Name</span>
+              <input
+                type="text"
+                value={newProduct.name}
+                onChange={({ target: { value } }) => {
+                  handleAddNewProduct('name', value);
+                }}
+              />
+            </div>
+            <div className={style.editField}>
+              <span>Cost</span>
+              <input
+                type="number"
+                value={newProduct.cost}
+                onChange={({ target: { value } }) => {
+                  handleAddNewProduct('cost', value);
+                }}
+              />
+            </div>
+            <div className={style.editField}>
+              <span>Manufacturer</span>
+              {manufacturers && (
+                // eslint-disable-next-line jsx-a11y/control-has-associated-label
+                <select
+                  value={newProduct.manufacturer}
+                  onChange={({ target: { value } }) =>
+                    handleAddNewProduct('manufacturer', Number(value))
+                  }
+                >
+                  {manufacturers.map((item) => (
+                    <option value={item.id}>{item.name}</option>
+                  ))}
+                </select>
+              )}
+            </div>
+            <div className={style.editField}>
+              <span>Type</span>
+              {types && (
+                // eslint-disable-next-line jsx-a11y/control-has-associated-label
+                <select
+                  value={newProduct.type}
+                  onChange={({ target: { value } }) =>
+                    handleAddNewProduct('type', Number(value))
+                  }
+                >
+                  {types.map((item) => (
+                    <option value={item.id}>{item.name}</option>
+                  ))}
+                </select>
+              )}
+            </div>
+          </div>
+          <div className={style.editActions}>
+            <button
+              type="button"
+              className={style.edit}
+              onClick={() => {
+                ProductService.post(newProduct);
+                setNewProduct(null);
+              }}
+            >
+              Save
+            </button>
+            <button
+              type="button"
+              className={style.cancel}
+              onClick={() => setNewProduct(null)}
             >
               Cancel
             </button>

@@ -34,13 +34,13 @@ export default class ProductService implements ApiService {
   }
 
   public static async put(
-    product: Pick<Product, 'cost' | 'name'> & {
+    product: Pick<Product, 'cost' | 'name' | 'id'> & {
       manufacturer: number;
       type: number;
     }
   ): Promise<void> {
     await http.get(
-      `${URL}/update/${product.name}/${product.cost}/${product.type}/${product.manufacturer}`
+      `${URL}/update/${product.id}/${product.name}/${product.cost}/${product.type}/${product.manufacturer}`
     );
   }
 }
