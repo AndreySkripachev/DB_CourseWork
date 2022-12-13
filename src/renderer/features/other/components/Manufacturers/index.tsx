@@ -109,21 +109,7 @@ const ManufacturersTableComponent: FC = () => {
       )}
       {editable && (
         <Modal>
-          <p className={style.modalTitle}>
-            Edit menu
-            <button
-              type="button"
-              className={style.add}
-              onClick={() =>
-                setNewManufacturer({
-                  country: '',
-                  name: '',
-                })
-              }
-            >
-              +
-            </button>
-          </p>
+          <p className={style.modalTitle}>Edit menu</p>
           <div>
             <div className={style.editField}>
               <span>Name</span>

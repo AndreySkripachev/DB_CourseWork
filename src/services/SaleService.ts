@@ -17,4 +17,12 @@ export default class SaleService implements ApiService {
 
     return SalesDto.map(saleMapper.fromDto);
   }
+
+  public static async delete(id: number): Promise<void> {
+    await http.get(`${URL}/delete/${id}`);
+  }
+
+  public static async put(employeeID: number): Promise<void> {
+    await http.get(`${URL}/update/${employeeID}`);
+  }
 }
