@@ -25,49 +25,57 @@ const SalesTableComponent: FC = () => {
       <caption className={style.caption}>Sales</caption>
       <thead>
         <tr>
-          <th>ID</th>
+          <th>№</th>
           <th>Employee</th>
           <th>Buyer</th>
           <th>Payment type</th>
           <th>Sale item</th>
+          <th>Date</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        {sales.map(({ id, buyer, employee, paymentType, saleItems }) => (
-          <tr className={style.row} key={id}>
-            <td>{id}</td>
-            <td>
-              {employee.firstName} {employee.lastName}
-            </td>
-            <td>
-              {buyer.name} ({buyer.email})
-            </td>
-            <td>{paymentType}</td>
-            <td>
-              <DropdownMenu
-                list={saleItems.map(
-                  (item) => `${item.productName} (${item.count} pcs.)`
-                )}
-                title="Sale item"
-              />
-            </td>
-            <td className={style.actionsBlock}>
-              <button type="button" className={style.edit} onClick={() => {}}>
-                🖊️
-              </button>
-              <button
-                type="button"
-                className={style.delete}
-                onClick={() => {
-                  setRemovable(id);
-                }}
-              >
-                🗑️
-              </button>
-            </td>
-          </tr>
-        ))}
+        {sales.map(
+          ({ id, buyer, employee, paymentType, saleItems, saleDate }, i) => (
+            <tr className={style.row} key={id}>
+              <td>{i + 1}</td>
+              <td>
+                {employee.firstName} {employee.lastName}
+              </td>
+              <td>
+                {buyer.name} ({buyer.email})
+              </td>
+              <td>{paymentType}</td>
+              <td>
+                <DropdownMenu
+                  list={saleItems.map(
+                    (item) => `${item.productName} (${item.count} pcs.)`
+                  )}
+                  title="Sale item"
+                />
+              </td>
+              <td>
+                {saleDate.getDay().toString().padStart(2, '0')}/
+                {saleDate.getMonth().toString().padStart(2, '0')}/
+                {saleDate.getFullYear()}
+              </td>
+              <td className={style.actionsBlock}>
+                <button type="button" className={style.edit} onClick={() => {}}>
+                  🖊️
+                </button>
+                <button
+                  type="button"
+                  className={style.delete}
+                  onClick={() => {
+                    setRemovable(id);
+                  }}
+                >
+                  🗑️
+                </button>
+              </td>
+            </tr>
+          )
+        )}
         {removable && (
           <ConfirmationDialog
             onReject={() => setRemovable(null)}

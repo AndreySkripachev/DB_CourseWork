@@ -7,6 +7,7 @@ class SaleMapper implements MapperFromDto<SaleDto, Sale> {
   public fromDto(dto: SaleDto): Sale {
     return {
       ...dto,
+      saleDate: new Date(dto.saleDate),
     };
   }
 }

@@ -60,7 +60,7 @@ const EmployeeTableComponent: FC = () => {
         </caption>
         <thead>
           <tr>
-            <th>ID</th>
+            <th>№</th>
             <th>First name</th>
             <th>Last name</th>
             <th>Patronymic</th>
@@ -69,9 +69,9 @@ const EmployeeTableComponent: FC = () => {
           </tr>
         </thead>
         <tbody>
-          {employees.map((item) => (
+          {employees.map((item, i) => (
             <tr className={style.row} key={item.id}>
-              <td>{item.id}</td>
+              <td>{i + 1}</td>
               <td>{item.firstName}</td>
               <td>{item.lastName}</td>
               <td>{item.patronymic}</td>

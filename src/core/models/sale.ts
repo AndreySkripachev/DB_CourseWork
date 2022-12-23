@@ -8,4 +8,5 @@ export interface Sale {
   readonly employee: Omit<Employee, 'position'>;
   readonly buyer: Pick<Buyer, 'name' | 'email'>;
   readonly paymentType: string;
+  readonly saleDate: Date;
 }

@@ -8,4 +8,5 @@ export interface SaleDto {
   readonly employee: Omit<EmployeeDto, 'position'>;
   readonly buyer: Pick<BuyerDto, 'name' | 'email'>;
   readonly paymentType: string;
+  readonly saleDate: string;
 }

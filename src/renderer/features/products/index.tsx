@@ -81,7 +81,7 @@ const ProductsTableComponent: FC = () => {
         </caption>
         <thead>
           <tr>
-            <th>ID</th>
+            <th>№</th>
             <th>Product name</th>
             <th>Cost</th>
             <th>Category</th>
@@ -90,9 +90,9 @@ const ProductsTableComponent: FC = () => {
           </tr>
         </thead>
         <tbody>
-          {products.map((item) => (
+          {products.map((item, i) => (
             <tr className={style.row} key={item.id}>
-              <td>{item.id}</td>
+              <td>{i + 1}</td>
               <td>{item.name}</td>
               <td>{item.cost}</td>
               <td>{item.type.name}</td>

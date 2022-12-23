@@ -64,16 +64,16 @@ const ManufacturersTableComponent: FC = () => {
         </caption>
         <thead>
           <tr>
-            <th>ID</th>
+            <th>№</th>
             <th>Name</th>
             <th>Country</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {manufacturers.map((item) => (
+          {manufacturers.map((item, i) => (
             <tr className={style.row}>
-              <td>{item.id}</td>
+              <td>{i + 1}</td>
               <td>{item.name}</td>
               <td>{item.country}</td>
               <td className={style.actionsBlock}>

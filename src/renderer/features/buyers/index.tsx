@@ -56,7 +56,7 @@ const BuyersTableComponent: FC = () => {
         </caption>
         <thead>
           <tr>
-            <th>ID</th>
+            <th>№</th>
             <th>Name</th>
             <th>Phone</th>
             <th>Email</th>
@@ -65,9 +65,9 @@ const BuyersTableComponent: FC = () => {
           </tr>
         </thead>
         <tbody>
-          {buyers.map((item) => (
+          {buyers.map((item, i) => (
             <tr className={style.row} key={item.id}>
-              <td>{item.id}</td>
+              <td>{i + 1}</td>
               <td>{item.name}</td>
               <td>
                 <PhoneNumber value={item.phone} />

@@ -61,15 +61,15 @@ const ProductTypesTableComponent: FC = () => {
         </caption>
         <thead>
           <tr>
-            <th>ID</th>
+            <th>№</th>
             <th>Name</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {productTypes.map((item) => (
+          {productTypes.map((item, i) => (
             <tr className={style.row}>
-              <td>{item.id}</td>
+              <td>{i + 1}</td>
               <td>{item.name}</td>
               <td className={style.actionsBlock}>
                 <button
