@@ -13,8 +13,8 @@ interface EditableSale {
   readonly id: number;
   readonly employee: number;
   readonly buyer: number;
+  readonly paymentType: number;
   readonly saleDate: Date;
-  readonly paymentType: string;
 }
 
 const SalesTableComponent: FC = () => {
@@ -70,7 +70,7 @@ const SalesTableComponent: FC = () => {
               <td>
                 {buyer.name} ({buyer.email})
               </td>
-              <td>{paymentType}</td>
+              <td>{paymentType.name}</td>
               <td>
                 <DropdownMenu
                   list={saleItems.map(
@@ -79,13 +79,21 @@ const SalesTableComponent: FC = () => {
                   title="Sale item"
                 />
               </td>
-              <td>
-                {saleDate.getDay().toString().padStart(2, '0')}/
-                {saleDate.getMonth().toString().padStart(2, '0')}/
-                {saleDate.getFullYear()}
-              </td>
+              <td>{saleDate.toISOString().split('T')[0]}</td>
               <td className={style.actionsBlock}>
-                <button type="button" className={style.edit} onClick={() => {}}>
+                <button
+                  type="button"
+                  className={style.edit}
+                  onClick={() => {
+                    setEditable({
+                      id,
+                      buyer: buyer.id,
+                      employee: employee.id,
+                      paymentType: paymentType.id,
+                      saleDate,
+                    });
+                  }}
+                >
                   🖊️
                 </button>
                 <button
@@ -130,6 +138,9 @@ const SalesTableComponent: FC = () => {
                     </option>
                   ))}
                 </select>
+              </div>
+              <div className={style.editFiled}>
+                <span>Buyer</span>
                 <select
                   value={editable.buyer}
                   onChange={({ target: { value } }) =>
@@ -142,16 +153,16 @@ const SalesTableComponent: FC = () => {
                     </option>
                   ))}
                 </select>
-                <div className={style.editField}>
-                  <span>Sale date</span>
-                  <input
-                    type="date"
-                    value={editable.saleDate.toUTCString()}
-                    onChange={({ target: { value } }) =>
-                      handleEdit('saleDate', new Date(value))
-                    }
-                  />
-                </div>
+              </div>
+              <div className={style.editField}>
+                <span>Sale date</span>
+                <input
+                  type="date"
+                  value={editable.saleDate.toISOString().split('T')[0]}
+                  onChange={({ target: { value } }) =>
+                    handleEdit('saleDate', new Date(value))
+                  }
+                />
               </div>
             </div>
             <div className={style.editActions}>

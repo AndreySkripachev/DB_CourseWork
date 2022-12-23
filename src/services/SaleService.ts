@@ -12,7 +12,7 @@ interface EditableSale {
   readonly employee: number;
   readonly buyer: number;
   readonly saleDate: Date;
-  readonly paymentType: string;
+  readonly paymentType: number;
 }
 
 export default class SaleService implements ApiService {
@@ -31,7 +31,8 @@ export default class SaleService implements ApiService {
   }
 
   public static async put(sale: EditableSale): Promise<void> {
-    const date = `${sale.saleDate.getFullYear()}-${sale.saleDate.getMonth()}-${sale.saleDate.getDay()}`;
+    const date = sale.saleDate.toLocaleDateString();
+
     await http.get(
       `${URL}/update/${sale.id}/${sale.buyer}/${sale.employee}/${sale.paymentType}/${date}`
     );
