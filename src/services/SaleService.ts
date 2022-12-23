@@ -7,6 +7,14 @@ import http from './HttpService';
 
 const URL = 'sales';
 
+interface EditableSale {
+  readonly id: number;
+  readonly employee: number;
+  readonly buyer: number;
+  readonly saleDate: Date;
+  readonly paymentType: string;
+}
+
 export default class SaleService implements ApiService {
   /**
    * Fetches Sales from API.
@@ -22,7 +30,10 @@ export default class SaleService implements ApiService {
     await http.get(`${URL}/delete/${id}`);
   }
 
-  public static async put(employeeID: number): Promise<void> {
-    await http.get(`${URL}/update/${employeeID}`);
+  public static async put(sale: EditableSale): Promise<void> {
+    const date = `${sale.saleDate.getFullYear()}-${sale.saleDate.getMonth()}-${sale.saleDate.getDay()}`;
+    await http.get(
+      `${URL}/update/${sale.id}/${sale.buyer}/${sale.employee}/${sale.paymentType}/${date}`
+    );
   }
 }

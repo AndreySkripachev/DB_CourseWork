@@ -1,24 +1,49 @@
-import { Employee, Sale } from 'core/models';
+import { Buyer, Employee, Sale } from 'core/models';
 import { FC, memo, useState } from 'react';
 import { ConfirmationDialog } from 'renderer/components/ConfirmationDialog/ConfirmationDialog';
 import { DropdownMenu } from 'renderer/components/DropdownList/DropdownList';
 import { Modal } from 'renderer/components/Modal/Modal';
+import BuyerService from 'services/BuyerService';
 import EmployeeService from 'services/EmployeeService';
 import SaleService from 'services/SaleService';
 
 import style from './style.module.css';
 
+interface EditableSale {
+  readonly id: number;
+  readonly employee: number;
+  readonly buyer: number;
+  readonly saleDate: Date;
+  readonly paymentType: string;
+}
+
 const SalesTableComponent: FC = () => {
   const [sales, setSales] = useState<readonly Sale[]>([]);
   const [employees, setEmployees] = useState<readonly Employee[]>([]);
+  const [buyers, setBuyers] = useState<readonly Buyer[]>([]);
   const [removable, setRemovable] = useState<null | number>(null);
-  const [editable, setEditable] = useState<number | null>(null);
+  const [editable, setEditable] = useState<EditableSale | null>(null);
+
+  const handleEdit = (
+    key: keyof EditableSale,
+    value: EditableSale[typeof key]
+  ) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    editable &&
+      setEditable({
+        ...editable,
+        [key]: value,
+      });
+  };
 
   // eslint-disable-next-line promise/catch-or-return
   SaleService.get().then(setSales);
 
   // eslint-disable-next-line promise/catch-or-return
   EmployeeService.get().then(setEmployees);
+
+  // eslint-disable-next-line promise/catch-or-return
+  BuyerService.get().then(setBuyers);
 
   return (
     <table className={style.table}>
@@ -94,9 +119,9 @@ const SalesTableComponent: FC = () => {
               <div className={style.editFiled}>
                 <span>Employee</span>
                 <select
-                  value={editable}
+                  value={editable.employee}
                   onChange={({ target: { value } }) =>
-                    setEditable(Number(value))
+                    handleEdit('employee', Number(value))
                   }
                 >
                   {employees?.map((item) => (
@@ -105,6 +130,28 @@ const SalesTableComponent: FC = () => {
                     </option>
                   ))}
                 </select>
+                <select
+                  value={editable.buyer}
+                  onChange={({ target: { value } }) =>
+                    handleEdit('buyer', Number(value))
+                  }
+                >
+                  {buyers.map((item) => (
+                    <option value={item.id}>
+                      {item.name} ({item.email})
+                    </option>
+                  ))}
+                </select>
+                <div className={style.editField}>
+                  <span>Sale date</span>
+                  <input
+                    type="date"
+                    value={editable.saleDate.toUTCString()}
+                    onChange={({ target: { value } }) =>
+                      handleEdit('saleDate', new Date(value))
+                    }
+                  />
+                </div>
               </div>
             </div>
             <div className={style.editActions}>
