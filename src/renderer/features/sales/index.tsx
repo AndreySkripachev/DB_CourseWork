@@ -17,12 +17,67 @@ interface EditableSale {
   readonly saleDate: Date;
 }
 
+const Report: FC<{ sales: readonly Sale[] }> = ({ sales }) => {
+  return (
+    <div className={style.report}>
+      <div>
+        <b className={style.reportTitle}>Sales</b>
+      </div>
+      <div className={style.reportItemBlock}>
+        {sales.map((item) => {
+          return (
+            <div key={item.id} className={style.reportItem}>
+              <div className={style.itemInfo}>
+                {item.employee.firstName} {item.employee.lastName} →{' '}
+                {item.buyer.name} ({item.buyer.email})
+              </div>
+              <div className={style.itemInfo}>
+                Sale date: {item.saleDate.toISOString().split('T')[0]}
+              </div>
+              {item.saleItems.map(({ count, id, productName, cost }) => (
+                <div key={id} className={style.reportItemField}>
+                  <div className={style.fieldDescription}>
+                    {productName} ({count} psc.)
+                  </div>
+                  <div className={style.fieldData}>{cost}₽</div>
+                </div>
+              ))}
+              <div className={style.reportItemField}>
+                <div className={style.fieldDescription}>
+                  <b>Total</b>
+                </div>
+                <div className={style.fieldData}>
+                  <b>
+                    {item.saleItems.reduce((a, b) => a + b.cost * b.count, 0)}₽
+                  </b>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+        <div className={style.reportFooter}>
+          <b>Sold total:</b>
+          <b>
+            {sales.reduce(
+              (acc, sale) =>
+                acc + sale.saleItems.reduce((a, b) => a + b.cost * b.count, 0),
+              0
+            )}
+            ₽
+          </b>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const SalesTableComponent: FC = () => {
   const [sales, setSales] = useState<readonly Sale[]>([]);
   const [employees, setEmployees] = useState<readonly Employee[]>([]);
   const [buyers, setBuyers] = useState<readonly Buyer[]>([]);
   const [removable, setRemovable] = useState<null | number>(null);
   const [editable, setEditable] = useState<EditableSale | null>(null);
+  const [isReportMode, setReportMode] = useState(false);
 
   const handleEdit = (
     key: keyof EditableSale,
@@ -45,9 +100,33 @@ const SalesTableComponent: FC = () => {
   // eslint-disable-next-line promise/catch-or-return
   BuyerService.get().then(setBuyers);
 
+  if (isReportMode) {
+    return (
+      <>
+        <button
+          type="button"
+          className="linkStyledButton"
+          onClick={() => setReportMode(false)}
+        >
+          Go to table view
+        </button>
+        <Report sales={sales} />
+      </>
+    );
+  }
+
   return (
-    <table className={style.table}>
-      <caption className={style.caption}>Sales</caption>
+    <table className={isReportMode ? style.report : style.table}>
+      <caption className={isReportMode ? style.reportTitle : style.caption}>
+        Sales
+        <button
+          type="button"
+          className="linkStyledButton"
+          onClick={() => setReportMode(true)}
+        >
+          View as report
+        </button>
+      </caption>
       <thead>
         <tr>
           <th>№</th>
@@ -62,7 +141,10 @@ const SalesTableComponent: FC = () => {
       <tbody>
         {sales.map(
           ({ id, buyer, employee, paymentType, saleItems, saleDate }, i) => (
-            <tr className={style.row} key={id}>
+            <tr
+              className={isReportMode ? style.reportItem : style.row}
+              key={id}
+            >
               <td>{i + 1}</td>
               <td>
                 {employee.firstName} {employee.lastName}

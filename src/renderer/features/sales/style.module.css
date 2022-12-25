@@ -67,3 +67,29 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.report {
+  width: 50%;
+}
+
+.reportTitle {
+  font-size: var(--fz-xl);
+  margin: 20px;
+}
+
+.itemInfo {
+  margin-bottom: 10px;
+}
+
+.reportItem {
+  border-top: 1px dashed #555;
+  padding: 20px;
+}
+
+.reportItemField,
+.reportFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px dotted #000;
+}

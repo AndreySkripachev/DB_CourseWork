@@ -31,10 +31,13 @@ export default class SaleService implements ApiService {
   }
 
   public static async put(sale: EditableSale): Promise<void> {
-    const date = sale.saleDate.toLocaleDateString();
+    const date = sale.saleDate.toLocaleDateString().split('.').map(Number);
+    date[0] += 1;
 
     await http.get(
-      `${URL}/update/${sale.id}/${sale.buyer}/${sale.employee}/${sale.paymentType}/${date}`
+      `${URL}/update/${sale.id}/${sale.buyer}/${sale.employee}/${
+        sale.paymentType
+      }/${date.join('.')}`
     );
   }
 }

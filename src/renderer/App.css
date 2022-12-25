@@ -57,3 +57,15 @@ a:hover {
   align-items: center;
   margin: 20px 0;
 }
+
+.linkStyledButton {
+  border: none;
+  box-shadow: none;
+  transform: none;
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+.linkStyledButton:hover {
+  transform: none;
+}
