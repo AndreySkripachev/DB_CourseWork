@@ -11,10 +11,9 @@ export default class ProductService implements ApiService {
   /**
    * Fetches products from API.
    */
-  public static async get(): Promise<Product[]> {
+  public static async get(): Promise<readonly Product[]> {
     const response = await http.get<ProductDto[]>(URL);
     const productsDto = response.data;
-
     return productsDto.map(productMapper.fromDto);
   }
 

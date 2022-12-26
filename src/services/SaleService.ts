@@ -15,6 +15,12 @@ interface EditableSale {
   readonly paymentType: number;
 }
 
+interface NewSale {
+  readonly employee: number;
+  readonly buyer: number;
+  readonly paymentType: number;
+}
+
 export default class SaleService implements ApiService {
   /**
    * Fetches Sales from API.
@@ -39,5 +45,13 @@ export default class SaleService implements ApiService {
         sale.paymentType
       }/${date.join('.')}`
     );
+  }
+
+  public static async post({
+    buyer,
+    employee,
+    paymentType,
+  }: NewSale): Promise<void> {
+    await http.get(`${URL}/add/${buyer}/${employee}/${paymentType}`);
   }
 }

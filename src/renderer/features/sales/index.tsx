@@ -1,11 +1,14 @@
-import { Buyer, Employee, Sale } from 'core/models';
+import { Buyer, Employee, PaymentType, Sale, Product } from 'core/models';
 import { FC, memo, useState } from 'react';
 import { ConfirmationDialog } from 'renderer/components/ConfirmationDialog/ConfirmationDialog';
 import { DropdownMenu } from 'renderer/components/DropdownList/DropdownList';
 import { Modal } from 'renderer/components/Modal/Modal';
 import BuyerService from 'services/BuyerService';
 import EmployeeService from 'services/EmployeeService';
+import PaymentTypeService from 'services/PaymentTypeService';
+import ProductService from 'services/ProductService';
 import SaleService from 'services/SaleService';
+import SaleItemService from 'services/SaleItemService';
 
 import style from './style.module.css';
 
@@ -16,6 +19,24 @@ interface EditableSale {
   readonly paymentType: number;
   readonly saleDate: Date;
 }
+
+interface NewSale {
+  readonly employee: number;
+  readonly buyer: number;
+  readonly paymentType: number;
+}
+
+interface NewSaleItem {
+  readonly product: number;
+  readonly sale: number;
+  readonly count: number;
+}
+
+const defaultSaleItem: NewSaleItem = {
+  count: 0,
+  product: 0,
+  sale: 0,
+};
 
 const Report: FC<{ sales: readonly Sale[] }> = ({ sales }) => {
   return (
@@ -75,8 +96,14 @@ const SalesTableComponent: FC = () => {
   const [sales, setSales] = useState<readonly Sale[]>([]);
   const [employees, setEmployees] = useState<readonly Employee[]>([]);
   const [buyers, setBuyers] = useState<readonly Buyer[]>([]);
+  const [paymentTypes, setPaymentTypes] = useState<readonly PaymentType[]>([]);
+  const [products, setProducts] = useState<readonly Product[]>([]);
   const [removable, setRemovable] = useState<null | number>(null);
   const [editable, setEditable] = useState<EditableSale | null>(null);
+  const [newSale, setNewSale] = useState<NewSale | null>(null);
+  const [newSaleItem, setNewSaleItem] = useState<NewSaleItem>({
+    ...defaultSaleItem,
+  });
   const [isReportMode, setReportMode] = useState(false);
 
   const handleEdit = (
@@ -91,14 +118,29 @@ const SalesTableComponent: FC = () => {
       });
   };
 
+  const handleNew = (key: keyof NewSale, value: NewSale[typeof key]) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    newSale &&
+      setNewSale({
+        ...newSale,
+        [key]: value,
+      });
+  };
+
   // eslint-disable-next-line promise/catch-or-return
   SaleService.get().then(setSales);
 
   // eslint-disable-next-line promise/catch-or-return
-  EmployeeService.get().then(setEmployees);
+  if (employees.length === 0) EmployeeService.get().then(setEmployees);
 
   // eslint-disable-next-line promise/catch-or-return
-  BuyerService.get().then(setBuyers);
+  if (buyers.length === 0) BuyerService.get().then(setBuyers);
+
+  // eslint-disable-next-line promise/catch-or-return
+  if (paymentTypes.length === 0) PaymentTypeService.get().then(setPaymentTypes);
+
+  // eslint-disable-next-line promise/catch-or-return, promise/always-return
+  if (products.length === 0) ProductService.get().then(setProducts);
 
   if (isReportMode) {
     return (
@@ -119,6 +161,19 @@ const SalesTableComponent: FC = () => {
     <table className={isReportMode ? style.report : style.table}>
       <caption className={isReportMode ? style.reportTitle : style.caption}>
         Sales
+        <button
+          type="button"
+          className={style.add}
+          onClick={() =>
+            setNewSale({
+              buyer: buyers[0].id,
+              employee: employees[0].id,
+              paymentType: paymentTypes[0].id,
+            })
+          }
+        >
+          +
+        </button>
         <button
           type="button"
           className="linkStyledButton"
@@ -174,6 +229,10 @@ const SalesTableComponent: FC = () => {
                       paymentType: paymentType.id,
                       saleDate,
                     });
+                    setNewSaleItem({
+                      ...newSaleItem,
+                      sale: id,
+                    });
                   }}
                 >
                   🖊️
@@ -206,7 +265,7 @@ const SalesTableComponent: FC = () => {
           <Modal>
             <p className={style.modalTitle}>Edit menu</p>
             <div>
-              <div className={style.editFiled}>
+              <div className={style.editField}>
                 <span>Employee</span>
                 <select
                   value={editable.employee}
@@ -221,7 +280,7 @@ const SalesTableComponent: FC = () => {
                   ))}
                 </select>
               </div>
-              <div className={style.editFiled}>
+              <div className={style.editField}>
                 <span>Buyer</span>
                 <select
                   value={editable.buyer}
@@ -233,6 +292,19 @@ const SalesTableComponent: FC = () => {
                     <option value={item.id}>
                       {item.name} ({item.email})
                     </option>
+                  ))}
+                </select>
+              </div>
+              <div className={style.editField}>
+                <span>Payment type</span>
+                <select
+                  value={editable.paymentType}
+                  onChange={({ target: { value } }) =>
+                    handleEdit('paymentType', Number(value))
+                  }
+                >
+                  {paymentTypes.map((item) => (
+                    <option value={item.id}>{item.name}</option>
                   ))}
                 </select>
               </div>
@@ -262,6 +334,75 @@ const SalesTableComponent: FC = () => {
                 type="button"
                 className={style.cancel}
                 onClick={() => setEditable(null)}
+              >
+                Cancel
+              </button>
+            </div>
+          </Modal>
+        )}
+        {newSale && (
+          <Modal>
+            <p className={style.modalTitle}>Add new sale</p>
+            <div>
+              <div className={style.editField}>
+                <span>Employee</span>
+                <select
+                  value={newSale.employee}
+                  onChange={({ target: { value } }) =>
+                    handleNew('employee', Number(value))
+                  }
+                >
+                  {employees?.map((item) => (
+                    <option value={item.id}>
+                      {item.firstName} {item.lastName} ({item.position})
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className={style.editField}>
+                <span>Buyer</span>
+                <select
+                  value={newSale.buyer}
+                  onChange={({ target: { value } }) =>
+                    handleNew('buyer', Number(value))
+                  }
+                >
+                  {buyers.map((item) => (
+                    <option value={item.id}>
+                      {item.name} ({item.email})
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className={style.editField}>
+                <span>Payment type</span>
+                <select
+                  value={newSale.paymentType}
+                  onChange={({ target: { value } }) =>
+                    handleNew('paymentType', Number(value))
+                  }
+                >
+                  {paymentTypes.map((item) => (
+                    <option value={item.id}>{item.name}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div className={style.editActions}>
+              <button
+                type="button"
+                className={style.edit}
+                onClick={() => {
+                  SaleService.post(newSale);
+                  setNewSale(null);
+                }}
+              >
+                Save
+              </button>
+              <button
+                type="button"
+                className={style.cancel}
+                onClick={() => setNewSale(null)}
               >
                 Cancel
               </button>

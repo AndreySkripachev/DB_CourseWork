@@ -1,4 +1,4 @@
-import { FC, memo, useState } from 'react';
+import { FC, Fragment, memo, useState } from 'react';
 
 import style from './style.module.css';
 
@@ -26,8 +26,12 @@ const DropdownListComponent: FC<Props> = ({ list, title }) => {
       {isOpen && (
         <div className={style.modalAnchor}>
           <ul className={style.modal}>
-            {list.map((item) => (
-              <li key={item}>{item}</li>
+            {list.map((item, i) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <Fragment key={i}>
+                <li key={item}>{item}</li>
+                {i !== list.length - 1 && <div className={style.separator} />}
+              </Fragment>
             ))}
           </ul>
         </div>
