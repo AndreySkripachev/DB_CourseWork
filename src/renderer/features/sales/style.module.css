@@ -93,3 +93,15 @@
   justify-content: space-between;
   border-bottom: 1px dotted #000;
 }
+
+.removeSaleItem {
+  padding: 2px;
+}
+
+.miniTitle {
+  font-size: var(--fz-m);
+}
+
+input[type='number'] {
+  width: 50px;
+}

@@ -318,6 +318,60 @@ const SalesTableComponent: FC = () => {
                   }
                 />
               </div>
+              <div>
+                <b className={style.miniTitle}>Sold goods</b>
+                {sales
+                  .find(({ id }) => id === editable.id)
+                  ?.saleItems.map((item) => (
+                    <div key={item.id} className={style.editField}>
+                      <span>
+                        {item.productName} ({item.count} pcs.)
+                      </span>
+                      <button
+                        type="button"
+                        className={`${style.delete} ${style.removeSaleItem}`}
+                        onClick={() => {
+                          SaleItemService.delete(item.id);
+                        }}
+                      >
+                        🗑️
+                      </button>
+                    </div>
+                  ))}
+                <div>
+                  <select
+                    onChange={({ target: { value } }) =>
+                      setNewSaleItem({
+                        ...newSaleItem,
+                        product: Number(value),
+                      })
+                    }
+                  >
+                    {products.map((item) => (
+                      <option value={item.id}>{item.name}</option>
+                    ))}
+                  </select>
+                  <input
+                    type="number"
+                    value={newSaleItem.count}
+                    onChange={({ target: { value } }) => {
+                      setNewSaleItem({
+                        ...newSaleItem,
+                        count: Number(value),
+                      });
+                    }}
+                  />
+                  <button
+                    type="button"
+                    className={style.add}
+                    onClick={() => {
+                      SaleItemService.post(newSaleItem);
+                    }}
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
             </div>
             <div className={style.editActions}>
               <button
