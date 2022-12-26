@@ -58,9 +58,9 @@ const Report: FC<{ sales: readonly Sale[] }> = ({ sales }) => {
               {item.saleItems.map(({ count, id, productName, cost }) => (
                 <div key={id} className={style.reportItemField}>
                   <div className={style.fieldDescription}>
-                    {productName} ({count} psc.)
+                    {productName} ({cost}₽ x {count} psc.)
                   </div>
-                  <div className={style.fieldData}>{cost}₽</div>
+                  <div className={style.fieldData}>{cost * count}₽</div>
                 </div>
               ))}
               <div className={style.reportItemField}>
